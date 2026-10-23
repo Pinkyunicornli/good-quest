@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Good Quest</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bungee&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <div class="page">
+      <header class="site-header">
+        <div class="brand">
+          <p class="brand-name">Good Quest</p>
+        </div>
+
+        <nav class="nav-desktop" aria-label="Primary">
+          <button class="nav-link is-active" type="button" data-view="quests" aria-current="page">Map</button>
+          <button class="nav-link" type="button" data-view="saved">Saved</button>
+          <button class="nav-link" type="button" data-view="hours">XP</button>
+        </nav>
+      </header>
+
+      <div class="checker" aria-hidden="true"></div>
+
+      <main id="main">
+        <section id="view-quests" class="view is-visible" aria-labelledby="quests-title">
+          <div class="home-banner">
+            <h1 id="quests-title">Find a quest for your community service hours</h1>
+          </div>
+
+          <form class="filter-bar" id="filter-form">
+            <div class="filter-grid">
+              <label>
+                Cause
+                <select id="filter-cause">
+                  <option value="">All</option>
+                </select>
+              </label>
+              <label>
+                When
+                <select id="filter-when">
+                  <option value="">Any</option>
+                  <option value="weekday">Weekdays</option>
+                  <option value="weekend">Weekends</option>
+                </select>
+              </label>
+            </div>
+          </form>
+
+          <p id="deck-count" class="deck-count"></p>
+          <div class="deck">
+            <div id="quest-list" aria-live="polite"></div>
+          </div>
+          <div id="deck-actions" class="deck-actions">
+            <button class="btn btn-secondary" type="button" id="btn-skip">Skip</button>
+            <button class="btn btn-primary" type="button" id="btn-save">Save</button>
+          </div>
+          <div id="no-results" class="empty-card" hidden>
+            <p>No quests match those filters.</p>
+            <button class="btn btn-secondary" type="button" id="clear-filters">Clear filters</button>
+          </div>
+
+          <form class="panel add-form" id="add-form">
+            <h2>New quest</h2>
+            <label>
+              Title
+              <input id="add-title" type="text" maxlength="80" placeholder="Name of the quest" />
+            </label>
+            <label>
+              Organization
+              <input id="add-org" type="text" maxlength="80" placeholder="Who hosts it" />
+            </label>
+            <label>
+              What you do
+              <input id="add-desc" type="text" maxlength="200" placeholder="Short description" />
+            </label>
+            <label>
+              Cause
+              <input id="add-cause" type="text" maxlength="40" placeholder="Sports, tutoring…" />
+            </label>
+            <label>
+              Location
+              <input id="add-location" type="text" maxlength="80" placeholder="City or campus" />
+            </label>
+            <label>
+              When
+              <select id="add-when">
+                <option value="weekend">Weekend</option>
+                <option value="weekday">Weekday</option>
+              </select>
+            </label>
+            <label>
+              Schedule
+              <input id="add-schedule" type="text" maxlength="80" placeholder="Saturdays 9 AM" />
+            </label>
+            <label>
+              Hours
+              <input id="add-hours" type="text" maxlength="40" placeholder="About 2" />
+            </label>
+            <label>
+              Who to contact
+              <input id="add-contact" type="text" maxlength="80" placeholder="Name" />
+            </label>
+            <label>
+              Email
+              <input id="add-email" type="email" maxlength="80" placeholder="name@example.com" />
+            </label>
+            <p id="add-error" class="unfinished-note" hidden></p>
+            <button class="btn btn-primary" type="submit">Create quest</button>
+          </form>
+        </section>
+
+        <section id="view-saved" class="view" hidden aria-labelledby="saved-title">
+          <h1 id="saved-title">Saved community service opportunities</h1>
+          <div id="saved-list"></div>
+        </section>
+
+        <section id="view-hours" class="view" hidden aria-labelledby="hours-title">
+          <h1 id="hours-title">XP</h1>
+
+          <article class="panel">
+            <p class="big-number" id="xp-total">0 <span id="xp-goal-label">/ 0</span></p>
+            <div class="progress" aria-hidden="true"><span id="xp-bar" style="width: 0%"></span></div>
+            <label>
+              XP goal
+              <input id="xp-goal" type="number" min="1" step="0.5" placeholder="20" />
+            </label>
+          </article>
+
+          <article class="panel">
+            <form class="log-form" id="log-form">
+              <label>
+                Activity
+                <select id="log-activity">
+                  <option value="">Pick a quest</option>
+                </select>
+              </label>
+              <label>
+                Date
+                <input id="log-date" type="date" />
+              </label>
+              <label>
+                Hours
+                <input id="log-hours" type="number" min="0.5" step="0.5" placeholder="2" />
+              </label>
+              <p id="log-error" class="unfinished-note" hidden></p>
+              <button class="btn btn-primary" type="submit">Add XP</button>
+            </form>
+            <div id="log-list"></div>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <p id="toast" class="toast" hidden>Saved</p>
+
+    <nav class="nav-mobile" aria-label="Primary">
+      <button class="nav-link is-active" type="button" data-view="quests" aria-current="page">Map</button>
+      <button class="nav-link" type="button" data-view="saved">Saved</button>
+      <button class="nav-link" type="button" data-view="hours">XP</button>
+    </nav>
+
+    <script src="script.js"></script>
+  </body>
+</html>
